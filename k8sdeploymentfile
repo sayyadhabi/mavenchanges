@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awsbatch
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: awsbatch
+  template:
+    metadata:
+      labels:
+        app: awsbatch
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: awsbatch
+spec:
+  selector:
+    app: awsbatch
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
